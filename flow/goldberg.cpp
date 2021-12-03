@@ -188,9 +188,9 @@ public:
     dischargePointer() 
     {
       height[source] = network.getVertexCount();
-      for (auto it = network.getEdgesIterator(source); it.valid(); it.next()) {
-        excess[it.getFinish()] += it.getResidualCapacity();
-        it.pushFlow(it.getResidualCapacity());
+      for (auto edge = network.getEdgesIterator(source); edge.valid(); edge.next()) {
+        excess[edge.getFinish()] += edge.getResidualCapacity();
+        edge.pushFlow(edge.getResidualCapacity());
       }
       for (Tvertex v = 0; v < network.getVertexCount(); ++v) {
         dischargePointer.push_back(network.getEdgesIterator(v));
@@ -245,11 +245,11 @@ protected:
       return false;
     }
     int minLevel = -1;
-    for (auto it = network.getEdgesIterator(startVertex); it.valid(); it.next()) {
-      if (it.getResidualCapacity() <= 0) {
+    for (auto edge = network.getEdgesIterator(startVertex); edge.valid(); edge.next()) {
+      if (edge.getResidualCapacity() <= 0) {
         continue;
       } 
-      int currentLevel = height[it.getFinish()] + 1;
+      int currentLevel = height[edge.getFinish()] + 1;
       if (currentLevel <= height[startVertex]) {
         continue;
       }
